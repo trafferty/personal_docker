@@ -1,0 +1,23 @@
+[user]
+	name = Tom Rafferty\n\n
+	email = trafferty@cnt.canon.com 
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+
+[core]
+    editor = /usr/bin/vim
+	excludesfile = ~/.gitignore_global
+	whitespace = cr-at-eol
+	autocrlf = input
+
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    pushit = push origin HEAD
+
+[merge]
+	tool = meld
