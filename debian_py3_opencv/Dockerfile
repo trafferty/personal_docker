@@ -7,6 +7,7 @@ USER root
 
 # Add pre-reqs 
 RUN apt-get update -qq && apt-get install -y --force-yes \
+    cmake \
     libgtk2.0-dev \
     pkg-config \
     libavcodec-dev \
@@ -43,26 +44,35 @@ RUN apt-get update -qq && apt-get install -y --force-yes \
     vainfo \
     i965-va-driver
 WORKDIR /home/trafferty/Downloads
-ADD XIMEA_Linux_SP.tgz /home/trafferty/Downloads/
+ADD XIMEA_Linux_SP.tar.gz /home/trafferty/Downloads/
 WORKDIR /home/trafferty/Downloads/package
 RUN ./install -cam_usb30 -silent
 
-# Opencv:
+# OpenCV:
 WORKDIR /home/trafferty/src
-RUN wget https://github.com/opencv/opencv/archive/master.zip -O opencv.zip
-RUN wget https://github.com/opencv/opencv_contrib/archive/master.zip -O opencv_contrib.zip
-RUN unzip opencv.zip
-RUN unzip opencv_contrib.zip
+# copy over pre-fetched tarballs. Remember, docker automagically un-tars after copying...
+ADD opencv-master.tar.gz /home/trafferty/src
+ADD opencv_contrib-master.tar.gz /home/trafferty/src
+# cd to the un-tarred dir, copy build script and run it
 WORKDIR /home/trafferty/src/opencv-master
 ADD opencv_install /home/trafferty/src/opencv-master
 RUN chmod +x opencv_install && ./opencv_install
+# run test so we can see if build was okay, but always return 0
 WORKDIR /home/trafferty/src/opencv-master/release/bin
 RUN opencv_test_core; return 0
+# cleanup
+WORKDIR /home/trafferty/src
+RUN rm -rf opencv-master
+RUN rm -rf opencv_contrib-master
 
 # Ximea test w/opencv
 WORKDIR /home/trafferty/src
 ADD ximea_opencv_test.cpp /home/trafferty/src/
 RUN g++ -I/usr/local/include/opencv ximea_opencv_test.cpp $(pkg-config --libs opencv) -o ximea_opencv_test && ./ximea_opencv_test; return 0
+
+RUN apt-get update -qq && apt-get install -y --force-yes x11-apps
+
+RUN apt-get update -qq && apt-get install -y --force-yes dbus-x11 terminator
 
 WORKDIR /home/trafferty
 USER trafferty

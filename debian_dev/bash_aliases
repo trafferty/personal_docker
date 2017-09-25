@@ -28,33 +28,10 @@ alias Top='top -ocpu -O+rsize -n 30'
 alias check_so="nm -d"
 
 alias cds='cd ~/src'
-#alias cdtt='cd /data/trafferty/src/trafferty'
-alias gall='gedit *.h *.cc &'
 
-alias vnc="sudo java -jar ~/bin/tightvnc/tightvnc-jviewer.jar"
 # cnt
 alias cda="cd $MII_HOME/src/auxil"
+alias cdx="cd $MII_HOME/src/xfd"
 alias cdg="cd $MII_HOME/src/gui200"
-alias cdgb="cd $MII_HOME/src/gui200/java/com/militho/broker"
-alias cdgg="cd $MII_HOME/src/gui200/java/com/militho/gui"
 alias cdw="cd $MII_WKSP"
 
-## Misc
-alias VimbaViewer='bin/prosilica/Vimba_2_0/Tools/Viewer/Bin/x86_64bit/VimbaViewer'
-
-## Docker aliases
-
-# stop and rm all containers:
-alias docker_stop_and_rm_all='docker ps -aq | xargs docker rm -f'
-
-# Kill all running containers.
-alias docker_killall='docker kill $(docker ps -q)'
-
-# Delete all stopped containers.
-alias docker_cleanc='printf "\n>>> Deleting stopped containers\n\n" && docker rm $(docker ps -a -q)'
-
-# Delete all untagged images.
-alias docker_cleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -q -f dangling=true)'
-
-# Delete all stopped containers and untagged images.
-alias docker_clean='dockercleanc || true && dockercleani'

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # download latest and unzip
 #cd /home/trafferty
 #mkdir src
