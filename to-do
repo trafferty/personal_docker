@@ -1,0 +1,13 @@
+TO-DO:
+
+debian-dev:
+
+    change alias files to point to mount-based dirs, ie:
+      export MII_HOME=/thr_main/dev/
+      export MII_WKSP=/thr_main/workspace
+
+      THR: above done by adding $THR_ROOT to paths.  requires THR_ROOT defined in docker_compose or cmd line. 
+
+    remove git completion stuff from bashrc
+
+      THR: done.  dit remove git install though since it is required from build process.
