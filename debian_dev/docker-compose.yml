@@ -1,0 +1,17 @@
+version: '3'
+
+services: 
+  debian_dev:
+    build: .
+    environment:
+      DISPLAY: 172.17.0.1:0
+      TZ: "America/Chicago"
+      THR_ROOT: "/thr_main"
+    volumes:
+     - /tmp/.X11-unix:/tmp/.X11-unix
+     - ~:/thr_main
+    network_mode: "bridge"
+    command: >
+      sh -c "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && 
+      echo $TZ > /etc/timezone &&
+      exec /bin/bash
